@@ -1,7 +1,7 @@
 #pragma once
 #include <msclr\marshal_cppstd.h>
 
-
+//typedef std::basic_string<TCHAR, std::char_traits<TCHAR>> tstring;
 
 namespace WifiModule {
 
@@ -49,12 +49,6 @@ namespace WifiModule {
 		array<System::String^>^ IPadd;
 		array<System::String^>^ Files;
 
-		// Flag for whether an Ack has been recveived
-		bool acked;
-
-		// Flag for whether all LED modules have files loaded onto them 
-		bool loaded;
-
 	private: System::Windows::Forms::TextBox^  fileSelectedTextBox;
 
 	public: 
@@ -74,14 +68,17 @@ namespace WifiModule {
 	private: System::Windows::Forms::OpenFileDialog^  openVideoDialog;
 	private: System::Windows::Forms::Button^  processButton;
 	private: System::Windows::Forms::Button^  repeatButton;
-	private: System::Windows::Forms::Button^  eraseButton;
+
 	private: System::Windows::Forms::Button^  tagFrameButton;
 	private: System::Windows::Forms::TextBox^  tagFramePathText;
-	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Label^  TagFrameLabel;
+
 	private: System::Windows::Forms::OpenFileDialog^  openTagFrameDialog;
 	private: System::Windows::Forms::CheckBox^  tagFrameCheckBox;
-	private: System::Windows::Forms::Button^  previewPlayButton;
-	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::Button^  stopVideoButton;
+	private: System::Windows::Forms::Button^  replayButton;
+
+
 
 	private: System::ComponentModel::BackgroundWorker^  backgroundWorkerRefresh;
 
@@ -94,102 +91,52 @@ namespace WifiModule {
 			try
 			{
 				// Create a TcpClient. 
-				// Note, for this client to work you need to have a TcpServer  
-				// connected to the same address as specified by the server, port 
-				// combination.
-
-				//MessageBox::Show(System::Convert::ToString(data->Count));
 
 				Int32 port = 2000;
 				TcpClient^ client = gcnew TcpClient(LEDmodule, port);
 
 				NetworkStream^ stream = client->GetStream();
-				
-				System::String^ Keyword = "TECXMOO";
 				Encoding^ ascii = Encoding::ASCII;
-				array<Byte>^ msg = ascii->GetBytes(Keyword);
+
+				// Keyword to erase the flash memory on the LED module
+				System::String^ Keyword1 = "TECZMOO";
+				array<Byte>^ msg1 = ascii->GetBytes(Keyword1);
 				
-				// Close everything.
-				//client->Close();
-				
-				/*
-				// Counter to tell if 1st or 2nd response
-				Int32 w = 0;
-				
-				// Send keyword to signal sending a file
-				for (int r = 0; r < 5; r++)
+				// Send the message to the connected LED module 
+				stream->Write( msg1, 0, msg1->Length );
+
+				// Buffer to store the response bytes.
+				array<Byte>^ ack1 = gcnew array<Byte>(256);
+
+				// String to store the response ASCII representation.
+				System::String^ response1 = nullptr;
+				Int32 l;
+				while (l = stream->Read( ack1, 0, ack1->Length ))
 				{
-					stream->Write( msg, 0, msg->Length );
-					
-					// Buffer to store the response bytes.
-					array<Byte>^ ack = gcnew array<Byte>(256);
+					// Read the response bytes from the LED module.
+					response1 = ascii->GetString( ack1 );
 
-					// String to store the response ASCII representation.
-					System::String^ response = nullptr;
-					Int32 i;
-
-					while (i = stream->Read( ack, 0, ack->Length ))
+					if (response1->Contains("ACK"))
 					{
-						// Read the TcpServer response bytes.
-						response = ascii->GetString( ack );
-						
-						// First response
-						if (w == 2)
-						{
-							break;
-						}
-
-						//Second response
-						else if (w == 1)
-						{
-							w++;
-						}
-
-						//Third response
-						else if (w == 0)
-						{
-							w++;
-						}
-
-						if (response->Contains("ACK"))
-						{
-							acked = true;
-							break;
-						}
-
-					}
-
-					if (acked == true)
-					{
-						acked = false;
 						break;
 					}
-
-					if (r == 4)
-					{
-						MessageBox::Show("Error, please reset the LED module.");
-						return;
-					}
 				}
-				*/
+
+				// Keyword to signal the start of when the file will be sent
+				System::String^ Keyword = "TECXMOO";
+				array<Byte>^ msg = ascii->GetBytes(Keyword);
 				
-				// Send file frame by frame
+				// Send file 10 frames at a time
 				for (int c = 0; c < data->Count; c++)
 				{
-					//TcpClient^ client2 = gcnew TcpClient(LEDmodule, port);
-
-					//NetworkStream^ stream2 = client2->GetStream();
-
 					array<Byte>^ byte_frames;
 					Encoding^ ascii = Encoding::ASCII;
 					byte_frames = ascii->GetBytes(data[c]);
 
-					//MessageBox::Show(data[c]);
-
 					// Send the frames to the connected LED module. 
 					stream->Write( byte_frames, 0, byte_frames->Length );
 
-					// Receive the TcpServer::response. 
+					// Receive the response. 
 
 					// Buffer to store the response bytes.
 					array<Byte>^ ack = gcnew array<Byte>(256);
@@ -199,7 +146,7 @@ namespace WifiModule {
 					Int32 k;
 					while (k = stream->Read( ack, 0, ack->Length ))
 					{
-						// Read the TcpServer response bytes.
+						// Read the response bytes.
 						response = ascii->GetString( ack );
 
 						if (response->Contains("ACK"))
@@ -207,31 +154,26 @@ namespace WifiModule {
 							break;
 						}
 					}
-					// Close everything.
-					//client2->Close();
 				}
-				//TcpClient^ client3 = gcnew TcpClient(LEDmodule, port);
 
-				//NetworkStream^ stream3 = client3->GetStream();
-
+				// Keyword to signal that the last of the frames has been sent and the file has been loaded
 				System::String^ Keyword2 = "TECYMOO";
 				array<Byte>^ msg2 = ascii->GetBytes(Keyword2);
 
 				stream->Write( msg2, 0, msg2->Length );
 
-				
 				// Close everything.
 				client->Close();
 			}
 			catch ( ArgumentNullException^ e ) 
 			{
 				System::String^ s = System::Convert::ToString(e);
-				MessageBox::Show("Could not connect, " + s); 
+				MessageBox::Show("Error, could not connect, make sure the csv file is formated correctly!"); 
 			}
 			catch ( SocketException^ e ) 
 			{
 				System::String^ s = System::Convert::ToString(e);
-				MessageBox::Show("Could not connect, " + s);
+				MessageBox::Show("Error, could not connect, try refreshing and try again.");
 			}
 		}
 
@@ -241,92 +183,26 @@ namespace WifiModule {
 			try
 			{
 				// Create a TcpClient. 
-				// Note, for this client to work you need to have a TcpServer  
-				// connected to the same address as specified by the server, port 
-				// combination.
 				Int32 port = 2000;
 				TcpClient^ client = gcnew TcpClient(LEDmodule, port);
-				//Encoding^ ascii = Encoding::ASCII;
+				
 				NetworkStream^ stream = client->GetStream();
-				// Send the message to the connected TcpServer.
+				
+				// Send the message to the connected LED module
 				stream->Write( data, 0, data->Length );
 
-				//// Send keyword to signal sending a file
-				//for (int r = 0; r < 10; r++)
-				//{
-				//	// Send the message to the connected TcpServer.
-				//	//stream->Write( data, 0, data->Length );
-				//	
-				//	// Buffer to store the response bytes.
-				//	array<Byte>^ ack = gcnew array<Byte>(256);
-
-				//	// String to store the response ASCII representation.
-				//	System::String^ response = nullptr;
-				//	Int32 i;
-				//	
-				//	// Counter to tell if 1st or 2nd response
-				//	Int32 w = 0;
-				//	while (i = stream->Read( ack, 0, ack->Length ))
-				//	{
-				//		// Read the TcpServer response bytes.
-				//		response = ascii->GetString( ack );
-				//		
-				//		// Third response
-				//		//if (w == 2)
-				//		//{
-				//			//break;
-				//		//}
-
-				//		//Second response
-				//		if (w == 1)
-				//		{
-				//			if (response->Contains("J"))
-				//			{
-				//			acked = true;
-				//			//sent = true;
-				//			break;
-				//			}
-				//			else break;
-				//		}
-
-				//		//First response
-				//		else if (w == 0)
-				//		{
-				//			if (response->Contains("J"))
-				//			{
-				//			acked = true;
-				//			//sent = true;
-				//			break;
-				//			}
-				//			else w++;
-				//		}
-				//	}
-
-				//	if (acked == true)
-				//	{
-				//		//acked = false;
-				//		break;
-				//	}
-
-				//	if (r == 9)
-				//	{
-				//		MessageBox::Show("Error, could not send command");
-				//		//sent = false;
-				//		return;
-				//	}
-				//}
 				// Close everything.
 				client->Close();
 			}
 			catch ( ArgumentNullException^ e ) 
 			{
 				System::String^ s = System::Convert::ToString(e);
-				MessageBox::Show("Could not connect, " + s);
+				MessageBox::Show("Error, could not connect, make sure the csv file is formated correctly!"); 
 			}
 			catch ( SocketException^ e ) 
 			{
 				System::String^ s = System::Convert::ToString(e);
-				MessageBox::Show("Could not connect, " + s );
+				MessageBox::Show("Error, could not connect, try refreshing and try again.");
 			}
 		}
 
@@ -343,7 +219,7 @@ namespace WifiModule {
 				System::String^ left = "170.255.1.";
 				int rightInt = 1;
 				System::String^ right;
-				for (int i = 0; i < 3; i++)
+				for (int i = 0; i < 5; i++)
 				{
 					right = System::Convert::ToString(rightInt);
 					System::String^ ipAddress = left + right;
@@ -379,8 +255,6 @@ namespace WifiModule {
 				IPadd[i] = wifiListBox->Items[i]->ToString();
 				Files[i] = "Please Select a File";
 			}
-			acked = false;
-			loaded = false;
 		}
 
 	protected:
@@ -428,21 +302,20 @@ namespace WifiModule {
 			this->backgroundWorkerRefresh = (gcnew System::ComponentModel::BackgroundWorker());
 			this->tabControl = (gcnew System::Windows::Forms::TabControl());
 			this->VideoPage = (gcnew System::Windows::Forms::TabPage());
+			this->replayButton = (gcnew System::Windows::Forms::Button());
+			this->stopVideoButton = (gcnew System::Windows::Forms::Button());
 			this->tagFrameCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->tagFrameButton = (gcnew System::Windows::Forms::Button());
 			this->tagFramePathText = (gcnew System::Windows::Forms::TextBox());
-			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->TagFrameLabel = (gcnew System::Windows::Forms::Label());
 			this->processButton = (gcnew System::Windows::Forms::Button());
 			this->videoBrowseButton = (gcnew System::Windows::Forms::Button());
 			this->videoPathText = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->WifiPage = (gcnew System::Windows::Forms::TabPage());
-			this->eraseButton = (gcnew System::Windows::Forms::Button());
 			this->repeatButton = (gcnew System::Windows::Forms::Button());
 			this->openVideoDialog = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->openTagFrameDialog = (gcnew System::Windows::Forms::OpenFileDialog());
-			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->previewPlayButton = (gcnew System::Windows::Forms::Button());
 			this->tabControl->SuspendLayout();
 			this->VideoPage->SuspendLayout();
 			this->WifiPage->SuspendLayout();
@@ -503,7 +376,7 @@ namespace WifiModule {
 			// 
 			// loadButton
 			// 
-			this->loadButton->Location = System::Drawing::Point(214, 103);
+			this->loadButton->Location = System::Drawing::Point(221, 104);
 			this->loadButton->Margin = System::Windows::Forms::Padding(2);
 			this->loadButton->Name = L"loadButton";
 			this->loadButton->Size = System::Drawing::Size(72, 20);
@@ -543,18 +416,18 @@ namespace WifiModule {
 			this->tabControl->Location = System::Drawing::Point(-1, 1);
 			this->tabControl->Name = L"tabControl";
 			this->tabControl->SelectedIndex = 0;
-			this->tabControl->Size = System::Drawing::Size(342, 290);
+			this->tabControl->Size = System::Drawing::Size(331, 280);
 			this->tabControl->TabIndex = 9;
 			// 
 			// VideoPage
 			// 
 			this->VideoPage->BackColor = System::Drawing::Color::WhiteSmoke;
-			this->VideoPage->Controls->Add(this->previewPlayButton);
-			this->VideoPage->Controls->Add(this->label4);
+			this->VideoPage->Controls->Add(this->replayButton);
+			this->VideoPage->Controls->Add(this->stopVideoButton);
 			this->VideoPage->Controls->Add(this->tagFrameCheckBox);
 			this->VideoPage->Controls->Add(this->tagFrameButton);
 			this->VideoPage->Controls->Add(this->tagFramePathText);
-			this->VideoPage->Controls->Add(this->label3);
+			this->VideoPage->Controls->Add(this->TagFrameLabel);
 			this->VideoPage->Controls->Add(this->processButton);
 			this->VideoPage->Controls->Add(this->videoBrowseButton);
 			this->VideoPage->Controls->Add(this->videoPathText);
@@ -562,16 +435,36 @@ namespace WifiModule {
 			this->VideoPage->Location = System::Drawing::Point(4, 22);
 			this->VideoPage->Name = L"VideoPage";
 			this->VideoPage->Padding = System::Windows::Forms::Padding(3);
-			this->VideoPage->Size = System::Drawing::Size(334, 264);
+			this->VideoPage->Size = System::Drawing::Size(323, 254);
 			this->VideoPage->TabIndex = 0;
 			this->VideoPage->Text = L"Video Processor";
 			this->VideoPage->Click += gcnew System::EventHandler(this, &Form1::tabPage1_Click);
 			this->VideoPage->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::VideoPage_Paint);
 			// 
+			// replayButton
+			// 
+			this->replayButton->Location = System::Drawing::Point(161, 187);
+			this->replayButton->Name = L"replayButton";
+			this->replayButton->Size = System::Drawing::Size(75, 60);
+			this->replayButton->TabIndex = 9;
+			this->replayButton->Text = L"Replay";
+			this->replayButton->UseVisualStyleBackColor = true;
+			this->replayButton->Click += gcnew System::EventHandler(this, &Form1::replayButton_Click);
+			// 
+			// stopVideoButton
+			// 
+			this->stopVideoButton->Location = System::Drawing::Point(242, 187);
+			this->stopVideoButton->Name = L"stopVideoButton";
+			this->stopVideoButton->Size = System::Drawing::Size(72, 60);
+			this->stopVideoButton->TabIndex = 8;
+			this->stopVideoButton->Text = L"Stop";
+			this->stopVideoButton->UseVisualStyleBackColor = true;
+			this->stopVideoButton->Click += gcnew System::EventHandler(this, &Form1::stopVideoButton_Click);
+			// 
 			// tagFrameCheckBox
 			// 
 			this->tagFrameCheckBox->AutoSize = true;
-			this->tagFrameCheckBox->Location = System::Drawing::Point(15, 95);
+			this->tagFrameCheckBox->Location = System::Drawing::Point(15, 141);
 			this->tagFrameCheckBox->Name = L"tagFrameCheckBox";
 			this->tagFrameCheckBox->Size = System::Drawing::Size(99, 17);
 			this->tagFrameCheckBox->TabIndex = 7;
@@ -580,9 +473,9 @@ namespace WifiModule {
 			// 
 			// tagFrameButton
 			// 
-			this->tagFrameButton->Location = System::Drawing::Point(239, 69);
+			this->tagFrameButton->Location = System::Drawing::Point(221, 137);
 			this->tagFrameButton->Name = L"tagFrameButton";
-			this->tagFrameButton->Size = System::Drawing::Size(75, 23);
+			this->tagFrameButton->Size = System::Drawing::Size(93, 23);
 			this->tagFrameButton->TabIndex = 6;
 			this->tagFrameButton->Text = L"Browse";
 			this->tagFrameButton->UseVisualStyleBackColor = true;
@@ -590,25 +483,25 @@ namespace WifiModule {
 			// 
 			// tagFramePathText
 			// 
-			this->tagFramePathText->Location = System::Drawing::Point(12, 69);
+			this->tagFramePathText->Location = System::Drawing::Point(12, 111);
 			this->tagFramePathText->Name = L"tagFramePathText";
-			this->tagFramePathText->Size = System::Drawing::Size(218, 20);
+			this->tagFramePathText->Size = System::Drawing::Size(302, 20);
 			this->tagFramePathText->TabIndex = 5;
 			// 
-			// label3
+			// TagFrameLabel
 			// 
-			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(12, 53);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(148, 13);
-			this->label3->TabIndex = 4;
-			this->label3->Text = L"Choose Tag Frame (Optional):";
+			this->TagFrameLabel->AutoSize = true;
+			this->TagFrameLabel->Location = System::Drawing::Point(12, 95);
+			this->TagFrameLabel->Name = L"TagFrameLabel";
+			this->TagFrameLabel->Size = System::Drawing::Size(148, 13);
+			this->TagFrameLabel->TabIndex = 4;
+			this->TagFrameLabel->Text = L"Choose Tag Frame (Optional):";
 			// 
 			// processButton
 			// 
-			this->processButton->Location = System::Drawing::Point(239, 98);
+			this->processButton->Location = System::Drawing::Point(12, 187);
 			this->processButton->Name = L"processButton";
-			this->processButton->Size = System::Drawing::Size(75, 53);
+			this->processButton->Size = System::Drawing::Size(143, 60);
 			this->processButton->TabIndex = 3;
 			this->processButton->Text = L"Process";
 			this->processButton->UseVisualStyleBackColor = true;
@@ -616,9 +509,9 @@ namespace WifiModule {
 			// 
 			// videoBrowseButton
 			// 
-			this->videoBrowseButton->Location = System::Drawing::Point(239, 30);
+			this->videoBrowseButton->Location = System::Drawing::Point(221, 59);
 			this->videoBrowseButton->Name = L"videoBrowseButton";
-			this->videoBrowseButton->Size = System::Drawing::Size(75, 23);
+			this->videoBrowseButton->Size = System::Drawing::Size(93, 23);
 			this->videoBrowseButton->TabIndex = 2;
 			this->videoBrowseButton->Text = L"Browse";
 			this->videoBrowseButton->UseVisualStyleBackColor = true;
@@ -626,15 +519,15 @@ namespace WifiModule {
 			// 
 			// videoPathText
 			// 
-			this->videoPathText->Location = System::Drawing::Point(12, 30);
+			this->videoPathText->Location = System::Drawing::Point(12, 33);
 			this->videoPathText->Name = L"videoPathText";
-			this->videoPathText->Size = System::Drawing::Size(221, 20);
+			this->videoPathText->Size = System::Drawing::Size(302, 20);
 			this->videoPathText->TabIndex = 1;
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(9, 13);
+			this->label2->Location = System::Drawing::Point(9, 15);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(95, 13);
 			this->label2->TabIndex = 0;
@@ -643,7 +536,6 @@ namespace WifiModule {
 			// WifiPage
 			// 
 			this->WifiPage->BackColor = System::Drawing::Color::WhiteSmoke;
-			this->WifiPage->Controls->Add(this->eraseButton);
 			this->WifiPage->Controls->Add(this->repeatButton);
 			this->WifiPage->Controls->Add(this->wifiListBox);
 			this->WifiPage->Controls->Add(this->playButton);
@@ -656,25 +548,15 @@ namespace WifiModule {
 			this->WifiPage->Location = System::Drawing::Point(4, 22);
 			this->WifiPage->Name = L"WifiPage";
 			this->WifiPage->Padding = System::Windows::Forms::Padding(3);
-			this->WifiPage->Size = System::Drawing::Size(334, 264);
+			this->WifiPage->Size = System::Drawing::Size(323, 254);
 			this->WifiPage->TabIndex = 1;
 			this->WifiPage->Text = L"LED Output";
-			// 
-			// eraseButton
-			// 
-			this->eraseButton->Location = System::Drawing::Point(184, 224);
-			this->eraseButton->Name = L"eraseButton";
-			this->eraseButton->Size = System::Drawing::Size(112, 25);
-			this->eraseButton->TabIndex = 10;
-			this->eraseButton->Text = L"Erase";
-			this->eraseButton->UseVisualStyleBackColor = true;
-			this->eraseButton->Click += gcnew System::EventHandler(this, &Form1::eraseButton_Click);
 			// 
 			// repeatButton
 			// 
 			this->repeatButton->Location = System::Drawing::Point(9, 224);
 			this->repeatButton->Name = L"repeatButton";
-			this->repeatButton->Size = System::Drawing::Size(112, 25);
+			this->repeatButton->Size = System::Drawing::Size(287, 25);
 			this->repeatButton->TabIndex = 9;
 			this->repeatButton->Text = L"Repeat";
 			this->repeatButton->UseVisualStyleBackColor = true;
@@ -684,36 +566,18 @@ namespace WifiModule {
 			// 
 			this->openTagFrameDialog->FileName = L"openTagFrameDialog";
 			// 
-			// label4
-			// 
-			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(10, 119);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(48, 13);
-			this->label4->TabIndex = 8;
-			this->label4->Text = L"Preview:";
-			// 
-			// previewPlayButton
-			// 
-			this->previewPlayButton->Location = System::Drawing::Point(127, 224);
-			this->previewPlayButton->Name = L"previewPlayButton";
-			this->previewPlayButton->Size = System::Drawing::Size(93, 23);
-			this->previewPlayButton->TabIndex = 11;
-			this->previewPlayButton->Text = L"Play Preview";
-			this->previewPlayButton->UseVisualStyleBackColor = true;
-			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(340, 293);
+			this->ClientSize = System::Drawing::Size(331, 283);
 			this->Controls->Add(this->tabControl);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Icon = (cli::safe_cast<System::Drawing::Icon^  >(resources->GetObject(L"$this.Icon")));
 			this->Margin = System::Windows::Forms::Padding(2);
 			this->MaximizeBox = false;
 			this->Name = L"Form1";
-			this->Text = L"LED GUI";
+			this->Text = L"Light Emitting Software";
 			this->tabControl->ResumeLayout(false);
 			this->VideoPage->ResumeLayout(false);
 			this->VideoPage->PerformLayout();
@@ -778,7 +642,7 @@ private: System::Void loadButton_Click(System::Object^  sender, System::EventArg
 				 System::String^ temp = "";
 				 int line = 1;
 
-				 // A list of strings that contain the values for every 10 frames
+				 // A list of strings that contain the values for every chunk of 10 frames
 				 List<System::String^>^ frame_strings = gcnew List<System::String^>(); 
 
 				 while ((temp = din->ReadLine()) != nullptr) 
@@ -804,19 +668,22 @@ private: System::Void loadButton_Click(System::Object^  sender, System::EventArg
 					 }
 				 }
 
+				 // Store the last few frames if there are less than 10 frames left
 				 if (frames != "")
 				 {
 					 frame_strings->Add(frames);
 				 }
 
+				 // If the last string in the list is an empty string, remove it 
 				 if (frame_strings[(frame_strings->Count)-1] == "")
 				 {
 					 frame_strings->RemoveAt((frame_strings->Count)-1);
 				 }
+
+				 // Send the csv data to the LED module
 				 Connect(IPadd[j],frame_strings);
 			 }
-			 loaded = true;
-			 MessageBox::Show("All files loaded!");
+			 MessageBox::Show("Load process ended");
 		 }
 private: System::Void refreshButton_Click(System::Object^  sender, System::EventArgs^  e) {
 
@@ -829,8 +696,7 @@ private: System::Void wifiListBox_SelectedIndexChanged(System::Object^  sender, 
 		 }
 private: System::Void playButton_Click(System::Object^  sender, System::EventArgs^  e) {
 
-			if (loaded == true)
-			 {
+			
 				 Keyword = "TECKMOO";
 				 Encoding^ ascii = Encoding::ASCII;
 				 // Translate the passed message into ASCII and store it as a Byte array. 
@@ -839,14 +705,8 @@ private: System::Void playButton_Click(System::Object^  sender, System::EventArg
 				 for (int j = 0; j < Files->Length; j++)
 				 {
 					 Connect2(IPadd[j], message);
-					 /*if (acked == false)
-					 {
-						 return;
-					 }
-					 else acked = false;*/
 				 }
-			 }
-			 else MessageBox::Show("Please load all LED modules with files first!");
+			 
 		 }
 private: System::Void stopButton_Click(System::Object^  sender, System::EventArgs^  e) {
 
@@ -858,16 +718,12 @@ private: System::Void stopButton_Click(System::Object^  sender, System::EventArg
 			 for (int j = 0; j < Files->Length; j++)
 			 {
 				 Connect2(IPadd[j], message);
-				/* if (acked == false)
-					 {
-						 return;
-					 }
-				 else acked = false;*/
+				 Connect2(IPadd[j], message);
+				 Connect2(IPadd[j], message);
 			 } 
 		 }
 private: System::Void repeatButton_Click(System::Object^  sender, System::EventArgs^  e) {
-			if (loaded == true)
-			 {
+			
 				 Keyword = "TECRMOO";
 				 Encoding^ ascii = Encoding::ASCII;
 				 // Translate the passed message into ASCII and store it as a Byte array. 
@@ -876,30 +732,8 @@ private: System::Void repeatButton_Click(System::Object^  sender, System::EventA
 				 for (int j = 0; j < Files->Length; j++)
 				 {
 					 Connect2(IPadd[j], message);
-					/* if (acked == false)
-					 {
-						 return;
-					 }
-					 else acked = false;*/
 				 }
-			 }
-			 else MessageBox::Show("Please load all LED modules with files first!");
-		 }
-private: System::Void eraseButton_Click(System::Object^  sender, System::EventArgs^  e) {
-			 Keyword = "TECZ";
-				 Encoding^ ascii = Encoding::ASCII;
-				 // Translate the passed message into ASCII and store it as a Byte array. 
-				 array<Byte>^ message = ascii->GetBytes(Keyword);
-
-				 for (int j = 0; j < Files->Length; j++)
-				 {
-					 Connect2(IPadd[j], message);
-					/* if (acked == false)
-					 {
-						 return;
-					 }
-					 else acked = false;*/
-				 }
+			 
 		 }
 private: System::Void backgroundWorkerRefresh_RunWorkerCompleted(System::Object^  sender, System::ComponentModel::RunWorkerCompletedEventArgs^  e) {
 
@@ -910,7 +744,7 @@ private: System::Void backgroundWorkerRefresh_RunWorkerCompleted(System::Object^
 			 System::String^ left = "170.255.1.";
 			 int rightInt = 1;
 			 System::String^ right;
-			 for (int i = 0; i < 3; i++)
+			 for (int i = 0; i < 5; i++)
 			 {
 				 right = System::Convert::ToString(rightInt);
 				 System::String^ ipAddress = left + right;
@@ -929,6 +763,13 @@ private: System::Void backgroundWorkerRefresh_RunWorkerCompleted(System::Object^
 			 /****Number of modules in listbox****/
 			 int n = wifiListBox->Items->Count;
 
+			 /****IPadd is an array containing all the modules in the listbox****/
+			IPadd = gcnew array<System::String^>(n);
+
+			/****Files is an array containing the filenames to be loaded onto the corresponding modules in IPadd with the same indices****/
+			/****If no file opened for the module, then value is NULL****/
+			Files = gcnew array<System::String^>(n);
+
 			 for (int i = 0; i < n; i++)
 			 {
 				 IPadd[i] = wifiListBox->Items[i]->ToString();
@@ -936,7 +777,7 @@ private: System::Void backgroundWorkerRefresh_RunWorkerCompleted(System::Object^
 			 }
 
 			 fileSelectedTextBox->Text = "Please select a Module";
-
+			 listboxclick = 0;
 			 MessageBox::Show("Refreshed!");
 
 		 }
@@ -948,7 +789,13 @@ private: System::Void backgroundWorkerRefresh_RunWorkerCompleted(System::Object^
 /*******************************************************************************************
 ******			Video Processing GUI										****************
 *******************************************************************************************/
-
+			private: static bool stopVidFlag = false;
+		/*private: static vector<vector<int>> rVals;		// vars used for replay
+		private: static	vector<vector<int>> gVals;
+		private: static	vector<vector<int>> bVals;
+		private: static Mat savedFrame;
+		private: static FrameProcessor processFrame;
+				 */
 
 		private: System::Void videoBrowseButton_Click(System::Object^  sender, System::EventArgs^  e) 
 		{
@@ -974,7 +821,22 @@ private: System::Void backgroundWorkerRefresh_RunWorkerCompleted(System::Object^
 			}
 		}
 
-		private: std::string getFileName(std::string filePathAndExt)
+		private: std::string getFilePath(std::string filePathAndExt)
+		{
+			std::string filePath;
+			unsigned found = filePathAndExt.find_last_of("/\\");
+			filePath = filePathAndExt.substr(0,found);
+			/*
+			for(int i = found+1; i<filePathAndExt.size(); i++)
+			{
+				if(filePathAndExt[i] == '.')
+					break;
+				fileName += filePathAndExt[i];
+			}*/
+			return filePath;
+		}
+
+				 private: std::string getFileName(std::string filePathAndExt)
 		{
 			std::string fileName;
 			unsigned found = filePathAndExt.find_last_of("/\\");
@@ -988,8 +850,10 @@ private: System::Void backgroundWorkerRefresh_RunWorkerCompleted(System::Object^
 			return fileName;
 		}
 
+
 		public: int process()
 		{
+			this->stopVidFlag = false;
 			using System::Runtime::InteropServices::Marshal;
 
 			System::String^ managedString = this->videoPathText->Text;
@@ -999,24 +863,13 @@ private: System::Void backgroundWorkerRefresh_RunWorkerCompleted(System::Object^
 
 			//cvStartWindowThread();
 
-			//std::string videoFile = "C:\\Programming\\Senior Design\\VideoProcessor\\GUI\\WifiCode\\WifiModule\\Debug\\testColorMix.avi";
 			VideoCapture cap(videoFile);		//Open Video File
 			if(!cap.isOpened())					// check if we succeeded
 			{
-				//cout<<"Error Opening Video"<<endl;
-				return -1;
-			}
-			
-			
-			std::string frameFileName = getFileName(videoFile) + ".csv";
-			std::ofstream frameFile;
-			frameFile.open (frameFileName);
-			if (!frameFile.is_open()) //error opening writefile
-			{
-				//cout<<"Error Opening CSV file"<<endl;
-				return -1;
-			}
 
+				return -1;
+			}
+			
 			FrameProcessor processFrame;
 
 			namedWindow("video",1);
@@ -1026,14 +879,18 @@ private: System::Void backgroundWorkerRefresh_RunWorkerCompleted(System::Object^
 
 			Mat firstFrame;
 			cap >> firstFrame;
+			//this->savedFrame = firstFrame;
 
-			//Mat image;
-			//image = imread(, CV_LOAD_IMAGE_COLOR);   // Read the file
-			/*
-			if(processFrame.isTagFrame(firstFrame))
-				processFrame.locateLEDLocations(firstFrame);
-			else
-				processFrame.basicLayout(firstFrame);*/
+			TCHAR exePath[MAX_PATH];
+			
+			if( !GetModuleFileName( NULL, exePath, MAX_PATH ) )
+			{
+				//printf("Cannot install service (%d)\n", GetLastError());
+				return -1;
+			}
+			
+			std::string frameFileName = exePath;
+			frameFileName = getFilePath(frameFileName)+"\\Frame Files\\"+ getFileName(videoFile); 
 
 			if(this->tagFrameCheckBox->Checked)		// User is using a tag frame
 			{
@@ -1041,13 +898,27 @@ private: System::Void backgroundWorkerRefresh_RunWorkerCompleted(System::Object^
 				msclr::interop::marshal_context tagContext;
 				std::string tagFile = tagContext.marshal_as<std::string>(managedTagString);
 				
+				frameFileName = frameFileName+"_"+getFileName(tagFile);						// if tag frame is used, output file
+																							// is videoName_tagFrameName.csv
+
 				Mat image;
-				image = imread(tagFile, CV_LOAD_IMAGE_COLOR);   // Read the file
+				image = imread(tagFile, CV_LOAD_IMAGE_COLOR);   // Read the tag file
 				processFrame.locateLEDLocations(image);
 				processFrame.scaleTagLocations(firstFrame,image);
 			}
 			else
+			{
 				processFrame.basicLayout(firstFrame);
+			}
+
+			frameFileName = frameFileName + ".csv";				// add extension to output file name
+			std::ofstream frameFile;										// open file stream to write output
+			frameFile.open (frameFileName);
+			if (!frameFile.is_open()) //error opening writefile
+			{
+				//cout<<"Error Opening CSV file"<<endl;
+				return -1;
+			}
 
 			for(int i = 0; i < frameCount-1; i++)		// frameCount-1 b/c we discarded first frame
 			{
@@ -1061,13 +932,16 @@ private: System::Void backgroundWorkerRefresh_RunWorkerCompleted(System::Object^
 				imshow("video", frame);
 
 				processFrame.process(frame);
-				//processFrame.colorCorrect();		// Apply gamma Correction
 				frameFile<<processFrame.getFrameString();
-				//if( (i-1)%30  == 0)
+				
 			
-				if( ( (i+1)%10 == 0 && i!=0) || i == frameCount-2)
+				if( ( (i+1)%10 == 0 && i!=0) || i == frameCount-2 || this->stopVidFlag)
 				{
 					frameFile<<"H";
+					if(this->stopVidFlag)
+					{	
+						break;
+					}
 				}
 				if( i != frameCount-2)
 				{
@@ -1081,71 +955,64 @@ private: System::Void backgroundWorkerRefresh_RunWorkerCompleted(System::Object^
 			//frameFile<<"Y";				// output file must end with "Y"
 			cvDestroyWindow("video");
 			frameFile.close();
-			//cout<<"Number of frames processed: "<<frameCount<<endl;
-			//cout<<"Approx. length of video: "<<frameCount/30<<" seconds"<<endl;
 
 			
 
-			vector<vector<int>> processedRVals = processFrame.processedRVals;
-			vector<vector<int>> processedGVals = processFrame.processedGVals;
-			vector<vector<int>> processedBVals = processFrame.processedBVals;
-
-			for(int replay = 0; replay< 1; replay++)
+			vector<vector<int>> rVals = processFrame.processedRVals;
+			vector<vector<int>> gVals = processFrame.processedGVals;
+			vector<vector<int>> bVals = processFrame.processedBVals;
+			
+			for(int replay = 0; replay< 1; replay++)			// Replay Video
 			{
-				//for(int i = 0; i<processedRVals.size(); i++)
-				//{
-					processFrame.replayVideo(firstFrame);		//Reuse first frame to draw on
-				//}
+				for(int frameNum = 0; frameNum<rVals.size(); frameNum++)
+				{
+					processFrame.replayVideo(firstFrame, rVals[frameNum], gVals[frameNum], bVals[frameNum]);		//Reuse first frame to draw on
+					if(this->stopVidFlag)
+					{
+						cvDestroyAllWindows();
+						break;
+					}
+				}
+				
+				if(this->stopVidFlag)
+				{
+					cvDestroyAllWindows();
+					break;
+				} 
 			}
 
 			
 			return 0;
 
 		}
-
+		/*
+		public: void replayVideo()
+		{
+				for(int frameNum = 0; frameNum<this->rVals.size(); frameNum++)
+				{
+					processFrame.replayVideo(savedFrame, this->rVals[frameNum], this->gVals[frameNum], this->bVals[frameNum]);		//Reuse first frame to draw on
+					if(this->stopVidFlag)
+					{
+						break;
+					}
+				}
+				cvDestroyAllWindows();
+		}
+				*/
 		private: System::Void VideoPage_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) 
 		{
-			Graphics^ g = e->Graphics;
-			//g->Clear(System::Drawing::Color::AntiqueWhite);
-
-			System::Drawing::Rectangle rect = System::Drawing::Rectangle(10,120,124,124);
-			System::Drawing::SolidBrush^ myBrush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::Red);
-			g->FillRectangle(myBrush, rect);
-			/*
-			System::Drawing::Rectangle smallRect;
-
-			smallRect.X = rect.X + rect.Width / 4;
-
-			smallRect.Y = rect.Y + rect.Height / 4;
-
-			smallRect.Width = rect.Width / 2;
-
-			smallRect.Height = rect.Height / 2;
-
- 
-
-		   Pen^ redPen = gcnew Pen(System::Drawing::Color::Red);
-
-		   redPen->Width = 4;
-
-		   g->DrawLine(redPen, 0, 0, rect.Width, rect.Height);
-
- 
-
-		   Pen^ bluePen = gcnew Pen(System::Drawing::Color::Blue);
-
-		   bluePen->Width = 10;
-
-		   g->DrawArc( bluePen, smallRect, 90, 270 );
-		   /*
-			System::Drawing::SolidBrush^ myBrush = gcnew System::Drawing::SolidBrush(System::Drawing::Color::Red);
-			System::Drawing::Graphics^ formGraphics;
-			formGraphics = this->CreateGraphics();
-			formGraphics->FillRectangle(myBrush, System::Drawing::Rectangle(10, 120, 25, 25));
-			delete myBrush;
-			delete formGraphics;*/
+			
 		}
 
+		private: System::Void stopVideoButton_Click(System::Object^  sender, System::EventArgs^  e) 
+		{
+			 this->stopVidFlag = true;
+			 cvDestroyAllWindows();
+		}
+		private: System::Void replayButton_Click(System::Object^  sender, System::EventArgs^  e) 
+		{
+			this->stopVidFlag = false;
+		}
 };
 }
 

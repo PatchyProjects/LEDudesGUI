@@ -1,96 +1,81 @@
-﻿Build started 4/28/2013 5:28:54 PM.
+﻿Build started 5/4/2013 8:27:23 PM.
      1>Project "C:\Programming\Senior Design\VideoProcessor\GUI\WifiCode\WifiModule\WifiModule\WifiModule.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
-         Creating "Debug\WifiModule.unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Touching "Debug\WifiModule.unsuccessfulbuild".
        GenerateTargetFrameworkMonikerAttribute:
        Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
        ClCompile:
-         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /AI"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /Zi /clr /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Debug\WifiModule.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /TP /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt AssemblyInfo.cpp Image.cpp stdafx.cpp WifiModule.cpp /clr:nostdlib 
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /AI"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /Zi /clr /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _MBCS /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Debug\WifiModule.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /TP /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt AssemblyInfo.cpp Image.cpp stdafx.cpp WifiModule.cpp /clr:nostdlib 
          AssemblyInfo.cpp
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(61): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(98): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(108): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(133): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(204): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(206): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(207): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(208): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(209): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(238): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(432): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(444): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(454): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(455): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(456): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(466): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(471): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(476): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(101): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(138): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(158): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(160): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(161): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(162): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(163): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(192): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(342): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(354): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(364): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(369): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(374): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(428): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
          Image.cpp
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(61): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(98): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(108): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(133): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(204): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(206): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(207): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(208): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(209): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(238): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(432): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(444): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(454): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(455): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(456): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(466): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(471): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(476): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(101): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(138): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(158): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(160): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(161): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(162): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(163): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(192): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(342): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(354): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(364): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(369): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(374): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(428): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
          stdafx.cpp
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(61): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(98): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(108): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(133): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(204): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(206): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(207): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(208): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(209): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(238): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(432): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(444): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(454): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(455): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(456): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(466): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(471): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(476): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(101): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(138): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(158): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(160): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(161): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(162): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(163): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(192): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(342): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(354): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(364): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(369): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(374): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(428): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
          WifiModule.cpp
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(61): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(98): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(108): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(133): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(204): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(206): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(207): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(208): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(209): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(238): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(432): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(444): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(454): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(455): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(456): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(466): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(471): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(476): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\Form1.h(982): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\Form1.h(1025): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /clr /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /TP /analyze- /errorReport:prompt "C:\Users\Chris\AppData\Local\Temp\.NETFramework,Version=v4.0.AssemblyAttributes.cpp"
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(101): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(138): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(158): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(160): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(161): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(162): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(163): warning C4244: '*=' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(192): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(342): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(354): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(364): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(369): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(374): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\FrameProcessor.h(428): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\Form1.h(844): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\Form1.h(878): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>c:\programming\senior design\videoprocessor\gui\wificode\wifimodule\wifimodule\Form1.h(967): warning C4018: '<' : signed/unsigned mismatch
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /clr /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _MBCS /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /TP /analyze- /errorReport:prompt "C:\Users\Chris\AppData\Local\Temp\.NETFramework,Version=v4.0.AssemblyAttributes.cpp"
          .NETFramework,Version=v4.0.AssemblyAttributes.cpp
        CoreResGen:
          "C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\NETFX 4.0 Tools\resgen.exe" /useSourcePath /r:"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll" /r:"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /r:"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /r:"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /r:"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /r:"C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /compile Form1.resX,Debug\WifiModule.Form1.resources
          Processing resource file "Form1.resX" into "Debug\WifiModule.Form1.resources".
        ResourceCompile:
-         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Debug\app.res" app.rc 
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /l"0x0409" /nologo /fo"Debug\app.res" app.rc 
        Link:
          C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Programming\Senior Design\VideoProcessor\GUI\WifiCode\WifiModule\Debug\WifiModule.exe" /INCREMENTAL /NOLOGO "C:\Program Files\OpenCV2.0\lib\cxcore200.lib" "C:\Program Files\OpenCV2.0\lib\highgui200.lib" "C:\Program Files\OpenCV2.0\lib\ml200.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /ASSEMBLYRESOURCE:Debug\WifiModule.Form1.resources /MANIFEST /ManifestFile:"Debug\WifiModule.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Programming\Senior Design\VideoProcessor\GUI\WifiCode\WifiModule\Debug\WifiModule.pdb" /ASSEMBLYDEBUG /SUBSYSTEM:WINDOWS /TLBID:1 /ENTRY:"main" /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 Debug\app.res
          Debug\AssemblyInfo.obj
@@ -108,4 +93,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:24.97
+Time Elapsed 00:00:19.24
